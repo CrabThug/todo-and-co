@@ -28,10 +28,10 @@
         "symfony/translation": "4.*",
         "symfony/validator": "4.*",
         "symfony/debug": "4.*",
-        "symfony/debug-pack": "^1.0"
+        "symfony/debug-pack": "^1.0",
+        "symfony/dotenv": "4.*"
     },
     "require-dev": {
-        "symfony/dotenv": "4.*",
         "symfony/maker-bundle": "^1.17",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/profiler-pack": "^1.0"
