@@ -14,17 +14,24 @@
     },
     "require": {
         "symfony/flex": "^1.0",
+        "symfony/framework-bundle": "4.*",
+        "symfony/console": "4.*",
+        "symfony/yaml": "4.*",
         "sensio/framework-extra-bundle": "^5.5",
-        "symfony/asset": "^5.0",
-        "symfony/orm-pack": "^1.0",
+        "symfony/asset": "4.*",
         "symfony/twig-pack": "^1.0",
+        "symfony/orm-pack": "^1.0",
         "symfony/monolog-bundle": "^3.5",
-        "symfony/mailer": "^5.0",
-        "symfony/form": "^5.0",
-        "symfony/validator": "^5.0"
+        "symfony/mailer": "4.*",
+        "symfony/form": "4.*",
+        "symfony/security-bundle": "4.*",
+        "symfony/translation": "4.*",
+        "symfony/validator": "4.*",
+        "symfony/debug": "4.*",
+        "symfony/debug-pack": "^1.0"
     },
     "require-dev": {
-        "symfony/dotenv": "^5.0",
+        "symfony/dotenv": "4.*",
         "symfony/maker-bundle": "^1.17",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
         "symfony/profiler-pack": "^1.0"
@@ -43,5 +50,9 @@
         "symfony/symfony": "*"
     },
     "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "4.*"
+        }
     }
 }
