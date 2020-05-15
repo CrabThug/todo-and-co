@@ -39,6 +39,11 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Task::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $task;
+
     public function getId()
     {
         return $this->id;
@@ -86,5 +91,23 @@ class User implements UserInterface
 
     public function eraseCredentials()
     {
+    }
+
+    public function getTask(): ?Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(?Task $task): self
+    {
+        $this->task = $task;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = null === $task ? null : $this;
+        if ($task->getUser() !== $newUser) {
+            $task->setUser($newUser);
+        }
+
+        return $this;
     }
 }
