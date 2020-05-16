@@ -3,10 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 class TaskController extends AbstractController
 {
@@ -21,7 +24,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, Security $security, TokenStorageInterface $tokenStorage)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -30,6 +33,10 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository('App:User')->findOneBy(['username' => 'test1'/*$security->getUser()->getUsername()*/]); //Todo
+            /** @var User $user */
+            $task->setUser($user);
 
             $em->persist($task);
             $em->flush();
@@ -52,6 +59,11 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var User $user */
+            $user = $task->getUser();
+            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($user);
+
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
