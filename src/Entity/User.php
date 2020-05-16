@@ -44,6 +44,11 @@ class User implements UserInterface
      */
     private $task;
 
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $roles;
+
     public function getId()
     {
         return $this->id;
@@ -61,7 +66,7 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return null;
+        return NULL;
     }
 
     public function getPassword()
@@ -84,11 +89,6 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
     public function eraseCredentials()
     {
     }
@@ -103,10 +103,25 @@ class User implements UserInterface
         $this->task = $task;
 
         // set (or unset) the owning side of the relation if necessary
-        $newUser = null === $task ? null : $this;
+        $newUser = NULL === $task ? NULL : $this;
         if ($task->getUser() !== $newUser) {
             $task->setUser($newUser);
         }
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles($roles = NULL)
+    {
+        $this->roles = $roles;
 
         return $this;
     }
