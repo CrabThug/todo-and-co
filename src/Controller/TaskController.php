@@ -60,7 +60,9 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($task->getUser());
+            /** @var User $user */
+            $user = $task->getUser();
+            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($user);
 
             $this->getDoctrine()->getManager()->flush();
 
