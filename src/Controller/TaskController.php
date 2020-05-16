@@ -58,6 +58,9 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($task->getUser());
+
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
