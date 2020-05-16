@@ -48,7 +48,7 @@ class Task
     public function __construct()
     {
         $this->createdAt = new \Datetime();
-        $this->isDone = false;
+        $this->isDone = FALSE;
     }
 
     public function getId()
@@ -96,9 +96,9 @@ class Task
         $this->isDone = $flag;
     }
 
-    public function getUser(): ?User
+    public function getUser()
     {
-        return $this->user;
+        return $this->user ?? 'anonyme';
     }
 
     public function setUser(?User $user): self
