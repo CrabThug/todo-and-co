@@ -34,7 +34,7 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository('App:User')->findOneBy(['username' => 'test1'/*$security->getUser()->getUsername()*/]); //Todo
+            $user = $em->getRepository('App:User')->findOneBy(['username' => $security->getUser()->getUsername()]);
             /** @var User $user */
             $task->setUser($user);
 
