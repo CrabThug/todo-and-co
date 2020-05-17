@@ -24,7 +24,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request, Security $security, TokenStorageInterface $tokenStorage)
+    public function createAction(Request $request, Security $security)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -93,14 +93,19 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task, Security $security)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        if ($security->getUser() === $task->getUser() || ($security->getUser()->getRoles() === 'ROLE_ADMIN' && $task->getUser() === 'anonyme')) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
 
+            return $this->redirectToRoute('task_list');
+        }
+
+        $this->addFlash('error', 'Vous n\'avez pas les droits necessaires.');
         return $this->redirectToRoute('task_list');
     }
 }
