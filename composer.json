@@ -29,15 +29,20 @@
         "symfony/validator": "4.*",
         "symfony/debug": "4.*",
         "symfony/debug-pack": "^1.0",
-        "symfony/dotenv": "4.*"
+        "symfony/dotenv": "4.*",
+        "symfony/serializer": "4.*",
+        "ext-json": "*"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.17",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
-        "symfony/profiler-pack": "^1.0"
+        "symfony/profiler-pack": "^1.0",
+        "symfony/phpunit-bridge": "^5.0",
+        "doctrine/doctrine-fixtures-bundle": "^3.3"
     },
     "scripts": {
         "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
