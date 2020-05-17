@@ -37,7 +37,8 @@
         "symfony/maker-bundle": "^1.17",
         "symfony/profiler-pack": "^1.0",
         "symfony/phpunit-bridge": "^5.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.3"
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "ext-http": "*"
     },
     "scripts": {
         "auto-scripts": {
