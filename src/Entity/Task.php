@@ -41,7 +41,7 @@ class Task
     private $isDone;
 
     /**
-     * @ORM\OneToOne(targetEntity=User::class, inversedBy="task", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="task", cascade={"persist"})
      */
     private $user;
 

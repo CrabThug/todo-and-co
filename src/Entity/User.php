@@ -40,7 +40,7 @@ class User implements UserInterface
     private $email;
 
     /**
-     * @ORM\OneToOne(targetEntity=Task::class, mappedBy="user", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user", cascade={"persist", "remove"})
      */
     private $task;
 
