@@ -45,9 +45,9 @@ class User implements UserInterface
     private $task;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=true)
+     * @ORM\Column(type="json")
      */
-    private $roles;
+    private $roles = [];
 
     public function getId()
     {
@@ -111,15 +111,15 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles = (array)$this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
         return array_unique($roles);
     }
 
-    public function setRoles($roles = NULL)
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
 
