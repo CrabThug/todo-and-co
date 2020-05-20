@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Task;
+use App\Entity\User;
 use App\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 
 class TaskController extends AbstractController
 {
@@ -21,7 +23,7 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, Security $security)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -30,6 +32,10 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository('App:User')->findOneBy(['username' => $security->getUser()->getUsername()]);
+            /** @var User $user */
+            $task->setUser($user);
 
             $em->persist($task);
             $em->flush();
@@ -52,6 +58,11 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            /** @var User $user */
+            $user = $task->getUser();
+            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($user);
+
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -81,14 +92,19 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task, Security $security)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        if ($security->getUser() === $task->getUser() || ($security->getUser()->getRoles() === 'ROLE_ADMIN' && $task->getUser() === 'anonyme')) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($task);
+            $em->flush();
 
-        $this->addFlash('success', 'La tâche a bien été supprimée.');
+            $this->addFlash('success', 'La tâche a bien été supprimée.');
 
+            return $this->redirectToRoute('task_list');
+        }
+
+        $this->addFlash('error', 'Vous n\'avez pas les droits necessaires.');
         return $this->redirectToRoute('task_list');
     }
 }

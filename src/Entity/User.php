@@ -39,6 +39,16 @@ class User implements UserInterface
      */
     private $email;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user", cascade={"persist", "remove"})
+     */
+    private $task;
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     public function getId()
     {
         return $this->id;
@@ -56,7 +66,7 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return null;
+        return NULL;
     }
 
     public function getPassword()
@@ -79,12 +89,40 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
     public function eraseCredentials()
     {
+    }
+
+    public function getTask(): ?Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(?Task $task): self
+    {
+        $this->task = $task;
+
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = NULL === $task ? NULL : $this;
+        if ($task->getUser() !== $newUser) {
+            $task->setUser($newUser);
+        }
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $roles = (array)$this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
+    }
+
+    public function setRoles($roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

@@ -40,10 +40,15 @@ class Task
      */
     private $isDone;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="task", cascade={"persist"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->createdAt = new \Datetime();
-        $this->isDone = false;
+        $this->isDone = FALSE;
     }
 
     public function getId()
@@ -89,5 +94,17 @@ class Task
     public function toggle($flag)
     {
         $this->isDone = $flag;
+    }
+
+    public function getUser()
+    {
+        return $this->user ?? 'anonyme';
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 }
