@@ -66,7 +66,7 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return NULL;
+        return null;
     }
 
     public function getPassword()
@@ -103,7 +103,7 @@ class User implements UserInterface
         $this->task = $task;
 
         // set (or unset) the owning side of the relation if necessary
-        $newUser = NULL === $task ? NULL : $this;
+        $newUser = null === $task ? null : $this;
         if ($task->getUser() !== $newUser) {
             $task->setUser($newUser);
         }
