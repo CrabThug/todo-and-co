@@ -27,8 +27,6 @@
         "symfony/security-bundle": "4.*",
         "symfony/translation": "4.*",
         "symfony/validator": "4.*",
-        "symfony/debug": "4.*",
-        "symfony/debug-pack": "^1.0",
         "symfony/dotenv": "4.*",
         "symfony/serializer": "4.*",
         "ext-json": "*",

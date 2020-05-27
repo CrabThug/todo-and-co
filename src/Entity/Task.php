@@ -48,7 +48,7 @@ class Task
     public function __construct()
     {
         $this->createdAt = new \Datetime();
-        $this->isDone = FALSE;
+        $this->isDone = false;
     }
 
     public function getId()
