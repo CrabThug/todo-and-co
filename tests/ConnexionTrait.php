@@ -1,15 +1,13 @@
 <?php
 
-
 namespace App\Tests;
-
 
 trait ConnexionTrait
 {
     private $client;
     private $crawler;
 
-    public function login($user,$password)
+    public function login($user, $password)
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
