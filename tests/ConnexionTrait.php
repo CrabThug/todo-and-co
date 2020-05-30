@@ -7,7 +7,7 @@ trait ConnexionTrait
     private $client;
     private $crawler;
 
-    public function login($user, $password)
+    public function login($user, $password): void
     {
         $this->client = static::createClient();
         $this->client->followRedirects();
@@ -18,7 +18,7 @@ trait ConnexionTrait
         $this->client->submit($form);
     }
 
-    public function logout()
+    public function logout(): void
     {
         $link = $this->crawler->selectLink('Se déconnecter');
         $this->client->submit($link);

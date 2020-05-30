@@ -7,9 +7,9 @@ use App\Entity\User;
 use App\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 
 class TaskController extends AbstractController
@@ -20,7 +20,7 @@ class TaskController extends AbstractController
     public function listAction(): Response
     {
         return $this->render('task/list.html.twig', [
-            'tasks' => $this->getDoctrine()->getRepository('App:Task')->findAll()
+            'tasks' => $this->getDoctrine()->getRepository('App:Task')->findAll(),
         ]);
     }
 
@@ -30,7 +30,7 @@ class TaskController extends AbstractController
      * @param Security $security
      * @return RedirectResponse|Response
      */
-    public function createAction(Request $request, Security $security)
+    public function createAction($request, $security)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -38,16 +38,15 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $entityManager = $this->getDoctrine()->getManager();
 
-            $user = $em->getRepository('App:User')->findOneBy([
-                    'username' => $security->getUser()->getUsername()]
-            );
-            /** @var User $user */
+            $user = $entityManager->getRepository('App:User')->findOneBy([
+                'username' => $security->getUser()->getUsername(),]);
+            /* @var User $user */
             $task->setUser($user);
 
-            $em->persist($task);
-            $em->flush();
+            $entityManager->persist($task);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -61,16 +60,15 @@ class TaskController extends AbstractController
      * @Route("/tasks/{id}/edit", name="task_edit")
      * @param Task $task
      * @param Request $request
-     * @return Mixed
+     * @return mixed
      */
-    public function editAction(Task $task, Request $request)
+    public function editAction($task, $request)
     {
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             /** @var User $user */
             $user = $task->getUser();
             $form->getData()->getUser() === $task->getUser() ?: $task->setUser($user);
@@ -90,15 +88,18 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * @param Task $task
+     * @return RedirectResponse
      */
-    public function toggleTaskAction(Task $task): RedirectResponse
+    public function toggleTaskAction($task): RedirectResponse
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success',
-            sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()
-            ));
+        $this->addFlash(
+            'success',
+            sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle())
+        );
 
         return $this->redirectToRoute('task_list');
     }
@@ -109,15 +110,16 @@ class TaskController extends AbstractController
      * @param Security $security
      * @return RedirectResponse
      */
-    public function deleteTaskAction(Task $task, Security $security): RedirectResponse
+    public function deleteTaskAction($task, $security): RedirectResponse
     {
-        if ($security->getUser() === $task->getUser()
-            || ($security->getUser()->getRoles() === 'ROLE_ADMIN'
-                && $task->getUser() === 'anonyme')
+        if (
+            $security->getUser() === $task->getUser()
+            || ('ROLE_ADMIN' === $security->getUser()->getRoles()
+                && 'anonyme' === $task->getUser())
         ) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($task);
-            $em->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($task);
+            $entityManager->flush();
 
             $this->addFlash('success', 'La tâche a bien été supprimée.');
 
@@ -125,6 +127,7 @@ class TaskController extends AbstractController
         }
 
         $this->addFlash('error', 'Vous n\'avez pas les droits necessaires.');
+
         return $this->redirectToRoute('task_list');
     }
 }
