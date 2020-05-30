@@ -7,3 +7,12 @@ engines:
             Naming/ShortVariable:
                 enabled: false
 # ... CONFIG CONTENT ...
+exclude_patterns:
+    - 'config/'
+    - 'bin/'
+    - 'node_modules/'
+    - 'public/'
+    - 'var/'
+    - 'tests/'
+    - 'vendor/'
+    - 'src/Kernel.php'
