@@ -30,7 +30,7 @@ class TaskController extends AbstractController
      * @param Security $security
      * @return RedirectResponse|Response
      */
-    public function createAction($request, $security)
+    public function createAction(Request $request, Security $security)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -39,9 +39,10 @@ class TaskController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
-
+            /** @var User $userLogged */
+            $userLogged = $security->getUser();
             $user = $entityManager->getRepository('App:User')->findOneBy([
-                'username' => $security->getUser()->getUsername(),]);
+                'username' => $userLogged->getUsername()]);
             /* @var User $user */
             $task->setUser($user);
 
@@ -62,7 +63,7 @@ class TaskController extends AbstractController
      * @param Request $request
      * @return mixed
      */
-    public function editAction($task, $request)
+    public function editAction(Task $task, Request $request)
     {
         $form = $this->createForm(TaskType::class, $task);
 
@@ -91,7 +92,7 @@ class TaskController extends AbstractController
      * @param Task $task
      * @return RedirectResponse
      */
-    public function toggleTaskAction($task): RedirectResponse
+    public function toggleTaskAction(Task $task): RedirectResponse
     {
         $task->toggle(!$task->isDone());
         $this->getDoctrine()->getManager()->flush();
@@ -110,11 +111,13 @@ class TaskController extends AbstractController
      * @param Security $security
      * @return RedirectResponse
      */
-    public function deleteTaskAction($task, $security): RedirectResponse
+    public function deleteTaskAction(Task $task, Security $security): RedirectResponse
     {
+        /** @var User $user */
+        $user = $security->getUser();
         if (
-            $security->getUser() === $task->getUser()
-            || ('ROLE_ADMIN' === $security->getUser()->getRoles()
+            $user === $task->getUser()
+            || ('ROLE_ADMIN' === $user->getRoles()
                 && 'anonyme' === $task->getUser())
         ) {
             $entityManager = $this->getDoctrine()->getManager();
