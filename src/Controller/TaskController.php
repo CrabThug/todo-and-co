@@ -70,10 +70,7 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var User $user */
-            $user = $task->getUser();
-            $form->getData()->getUser() === $task->getUser() ?: $task->setUser($user);
-
+            $this->denyAccessUnlessGranted('edit', $task, 'Vous n\'avez pas les droits necessaires');
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
@@ -108,28 +105,17 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
      * @param Task $task
-     * @param Security $security
      * @return RedirectResponse
      */
-    public function deleteTaskAction(Task $task, Security $security): RedirectResponse
+    public function deleteTaskAction(Task $task): RedirectResponse
     {
-        /** @var User $user */
-        $user = $security->getUser();
-        if (
-            $user === $task->getUser()
-            || ('ROLE_ADMIN' === $user->getRoles()
-                && 'anonyme' === $task->getUser())
-        ) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($task);
-            $entityManager->flush();
+        $this->denyAccessUnlessGranted('delete', $task, 'Vous n\'avez pas les droits necessaires');
 
-            $this->addFlash('success', 'La tâche a bien été supprimée.');
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($task);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('task_list');
-        }
-
-        $this->addFlash('error', 'Vous n\'avez pas les droits necessaires.');
+        $this->addFlash('success', 'La tâche a bien été supprimée.');
 
         return $this->redirectToRoute('task_list');
     }
