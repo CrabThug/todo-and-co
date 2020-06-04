@@ -17,7 +17,11 @@ class TaskVoter extends Voter
      * @var Security
      */
     private $security;
-
+    
+    /**
+     * TaskVoter constructor.
+     * @param Security $security
+     */
     public function __construct(Security $security)
     {
         $this->security = $security;

@@ -11,7 +11,7 @@ class DefaultControllerTest extends WebTestCase
 
     public function testIndexAction()
     {
-        $this->login('user1','password');
+        $this->login('user1', 'password');
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('a', 'Consulter la liste des tâches à faire');
     }

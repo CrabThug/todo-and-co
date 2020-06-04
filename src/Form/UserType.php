@@ -19,7 +19,7 @@ class UserType extends AbstractType
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Twice password must be same',
-                'required' => true,
+                'required' =>   true,
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Second Password'],
             ])

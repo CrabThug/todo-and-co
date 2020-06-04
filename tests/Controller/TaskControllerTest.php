@@ -42,7 +42,7 @@ class TaskControllerTest extends WebTestCase
     {
         $task = $this->taskRepository->findOneBy(['title' => 'demo_title']);
         if ($task) {
-            $this->crawler = $this->client->request('GET', '/tasks/' . $task->getId() .'/toggle');
+            $this->crawler = $this->client->request('GET', '/tasks/' . $task->getId() . '/toggle');
             self::assertResponseIsSuccessful();
             self::assertSelectorExists('div .alert-success');
         }
@@ -68,7 +68,7 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskAction()
     {
-        $task = $this->taskRepository->findOneBy(['title' => 'demo_title']);
+        $task = $this->taskRepository->findOneBy(['title' => 'user1']);
         $task2 = $this->taskRepository->findOneBy(['title' => 'user2']);
         if ($task) {
             $this->crawler = $this->client->request('GET', '/tasks/' . $task->getId() . '/delete');
@@ -77,8 +77,7 @@ class TaskControllerTest extends WebTestCase
         }
         if ($task2) {
             $this->crawler = $this->client->request('GET', '/tasks/' . $task2->getId() . '/delete');
-            self::assertResponseIsSuccessful();
-            self::assertSelectorExists('div .alert-danger');
+            self::assertResponseStatusCodeSame('403');
         }
         $task ?: self::assertNull($task);
         $task2 ?: self::assertNull($task2);

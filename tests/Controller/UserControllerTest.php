@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class UserControllerTest extends WebTestCase
 {
-
     use ConnexionTrait;
 
     private $userRepository;
@@ -30,6 +29,10 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
+        if ($try = $this->userRepository->findOneBy(['username' => 'demo'])) {
+            $this->em->remove($try);
+            $this->em->flush();
+        }
         $this->crawler = $this->client->request('GET', '/users/create');
         self::assertResponseIsSuccessful();
         self::assertSelectorExists('form #user');
@@ -50,7 +53,7 @@ class UserControllerTest extends WebTestCase
         if ($user) {
             $this->crawler = $this->client->request('GET', '/users/' . $user->getId() . '/edit');
             self::assertResponseIsSuccessful();
-            self::assertSelectorExists('form #user');
+            self::assertSelectorExists('.row #user');
             $form = $this->crawler->selectButton('Modifier')->form();
             $form['user[username]'] = 'demo';
             $form['user[password][first]'] = 'password';
