@@ -6,3 +6,38 @@ ToDoList
 Base du projet #8 : Améliorez un projet existant
 
 https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+
+
+###### INSTALLATION
+
+`git clone`
+
+modifier le fichier .env (passer en dev si fixtures)
+* bdd
+* environnement ( prod | dev )
+
+recuperer les dependences
+
+`composer install --no-dev --optimize-autoloader --classmap-authoritative`
+
+creer la base de donnée
+
+`bin/console d:d:c`
+
+creer les tables
+
+`bin/console d:s:u -f`
+
+(optionnel) installer les fixtures
+
+`bin/console d:f:l -n`
+
+identifiant : admin
+
+mot de passe : password
+
+#
+
+lancer l'application !
+
+`symfony server:start`
