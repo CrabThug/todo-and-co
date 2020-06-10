@@ -28,6 +28,8 @@ creer les tables
 
 `bin/console d:s:u -f`
 
+#
+
 (optionnel) installer les fixtures
 
 `bin/console d:f:l -n`
