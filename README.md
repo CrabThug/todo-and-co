@@ -5,7 +5,15 @@ ToDoList
 
 Base du projet #8 : Améliorez un projet existant
 
+----
+
 https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+
+[Audit de Qualité et de Performance](../docs/Audit_de_qualité_et_de_performance.pdf)
+
+[Rapport de securité](../docs/Rapport_de_securité_symfony_4.4.3.pdf)
+
+[Contributing.md](../Contributing.md)
 
 
 ###### INSTALLATION
