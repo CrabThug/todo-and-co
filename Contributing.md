@@ -7,7 +7,7 @@ afin de contribuer au projet :
 
     `git clone https://github.com/VotrePseudo/todo-and-co.git`
 
-3. Installer le projet et ses dépendances a l'aide des elements present dans le READme, en l'environement `dev`
+3. Installer le projet et ses dépendances a l'aide des [instructions](../README.md), en l'environnement **dev**
 4. Créer une nouvelle branche
 
     `git checkout -b nouvelle-branch`
@@ -33,7 +33,11 @@ vous pouvez faire hériter votre classe par DataFixturesTestCase qui chargera au
 ### Norme PSR
 
 Afin de verifier votre code avant tout commit, pensez a effectué un test de conformiter aux normes:
+
 **psr1 et ps12**
 
-Cela peut soit se faire a l'aide d'un site tel que codeclimate soit a l'aide de plugin tel que : **phpcs, phpcbf, php-cs-fixer**
+Cela peut soit se faire a l'aide d'un site tel que codeclimate soit a l'aide de plugin tel que : 
+
+**phpcs, phpcbf, php-cs-fixer**
+
 Soyer clair dans vos messages de commit et commenter votre code si cela vous parait nécessaire.
