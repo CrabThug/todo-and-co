@@ -9,11 +9,11 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 
 ----
 
-[Audit de Qualité et de Performance](../docs/Audit_de_qualité_et_de_performance.pdf)
+[Audit de Qualité et de Performance](https://github.com/CrabThug/todo-and-co/blob/master/docs/Audit_de_qualit%C3%A9_et_de_performance.pdf)
 
-[Rapport de securité](../docs/Rapport_de_securité_symfony_4.4.3.pdf)
+[Rapport de securité](https://github.com/CrabThug/todo-and-co/blob/master/docs/Rapport_de_securit%C3%A9_symfony_4.4.3.pdf)
 
-[Contributing.md](../Contributing.md)
+[Contributing.md](https://github.com/CrabThug/todo-and-co/blob/master/Contributing.md#contributing)
 
 
 ###### INSTALLATION

@@ -10,11 +10,11 @@ afin de contribuer au projet :
 3. Installer le projet et ses dépendances a l'aide des [instructions](../README.md), en l'environnement **dev**
 4. Créer une nouvelle branche
 
-    `git checkout -b nouvelle-branch`
+    `git checkout -b dev`
     
 5. Push la branch sur votre fork
 
-    `git push origin nouvelle-branch`
+    `git push origin dev`
 
 6. Ouvrir une pull request sur le répertoire Github du projet
 
