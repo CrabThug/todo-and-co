@@ -20,9 +20,7 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 
 `git clone https://github.com/CrabThug/todo-and-co.git`
 
-modifier le fichier .env (passer en dev si fixtures)
-* bdd
-* environnement ( prod | dev )
+modifier la base de donnée dans le fichier .env (passer en dev si fixtures)
 
 recuperer les dependences
 
