@@ -7,7 +7,7 @@ afin de contribuer au projet :
 
     `git clone https://github.com/VotrePseudo/todo-and-co.git`
 
-3. Installer le projet et ses dépendances a l'aide des [instructions](../README.md), en l'environnement **dev**
+3. Installer le projet et ses dépendances a l'aide des [instructions](https://github.com/CrabThug/todo-and-co/blob/master/README.md), en l'environnement **dev**
 4. Créer une nouvelle branche
 
     `git checkout -b dev`
