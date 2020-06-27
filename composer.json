@@ -33,7 +33,7 @@
         "symfony/mailer": "4.*"
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.17",
+        "symfony/maker-bundle": "^1.19",
         "symfony/profiler-pack": "^1.0",
         "symfony/phpunit-bridge": "^5.0",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
