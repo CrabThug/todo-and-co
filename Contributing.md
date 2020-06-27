@@ -2,13 +2,14 @@
 
 afin de contribuer au projet :
 
-1. realiser un fork
+1. Realiser un fork
 2. Cloner localement votre fork
 
     `git clone https://github.com/VotrePseudo/todo-and-co.git`
 
 3. Installer le projet et ses dépendances a l'aide des [instructions](https://github.com/CrabThug/todo-and-co/blob/master/README.md), en l'environnement **dev**
-4. Créer une nouvelle branche
+
+4. Créer une nouvelle branche de developpement
 
     `git checkout -b dev`
     
@@ -34,10 +35,10 @@ vous pouvez faire hériter votre classe par DataFixturesTestCase qui chargera au
 
 Afin de verifier votre code avant tout commit, pensez a effectué un test de conformiter aux normes:
 
-**psr1 et ps12**
+**[psr1](https://www.php-fig.org/psr/psr-1) et [ps12](https://www.php-fig.org/psr/psr-12)**
 
 Cela peut soit se faire a l'aide d'un site tel que codeclimate soit a l'aide de plugin tel que : 
 
-**phpcs, phpcbf, php-cs-fixer**
+**[phpcs](https://github.com/squizlabs/PHP_CodeSniffer), [phpcbf](https://github.com/squizlabs/PHP_CodeSniffer), [php-cs-fixer](https://cs.symfony.com)**
 
 Soyer clair dans vos messages de commit et commenter votre code si cela vous parait nécessaire.
